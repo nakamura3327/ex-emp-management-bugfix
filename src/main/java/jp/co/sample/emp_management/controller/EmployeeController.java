@@ -65,24 +65,19 @@ public class EmployeeController {
 	 * @return 従業員詳細画面
 	 */
 	@RequestMapping("/showDetail")
-	public String showDetail(String id, Model model) {
+	public String showDetail(UpdateEmployeeForm form, Model model) {
 		Employee employee = employeeService.showDetail(form.getIntId());
 		BeanUtils.copyProperties(employee, form);
-		form.setId(""+employee.getId())
+		form.setId(""+employee.getId());
 		form.setGender(employee.getGender());
-		form.setHireDate(employee.getHireDate());
 		form.setMailAddress(employee.getMailAddress());
 		form.setZipCode(employee.getZipCode());
 		form.setAddress(employee.getAddress());
 		form.setTelephone(employee.getTelephone());
 		form.setSalary(employee.getSalary());
 		form.setCharacteristics(employee.getCharacteristics());		
-		form.setName(employee.getName());}
+		form.setName(employee.getName());
 		
-		
-		
-//		Employee employee = employeeService.showDetail(Integer.parseInt(id));
-		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
 
