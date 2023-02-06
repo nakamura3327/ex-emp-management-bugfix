@@ -2,6 +2,7 @@ package jp.co.sample.emp_management.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +66,22 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showDetail")
 	public String showDetail(String id, Model model) {
-		Employee employee = employeeService.showDetail(Integer.parseInt(id));
+		Employee employee = employeeService.showDetail(form.getIntId());
+		BeanUtils.copyProperties(employee, form);
+		form.setId(""+employee.getId())
+		form.setGender(employee.getGender());
+		form.setHireDate(employee.getHireDate());
+		form.setMailAddress(employee.getMailAddress());
+		form.setZipCode(employee.getZipCode());
+		form.setAddress(employee.getAddress());
+		form.setTelephone(employee.getTelephone());
+		form.setSalary(employee.getSalary());
+		form.setCharacteristics(employee.getCharacteristics());		
+		form.setName(employee.getName());}
+		
+		
+		
+//		Employee employee = employeeService.showDetail(Integer.parseInt(id));
 		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
@@ -87,6 +103,16 @@ public class EmployeeController {
 		Employee employee = new Employee();
 		employee.setId(form.getIntId());
 		employee.setDependentsCount(form.getIntDependentsCount());
+		employee.setGender(form.getGender());
+		employee.setHireDate(form.getHireDate());
+		employee.setMailAddress(form.getMailAddress());
+		employee.setZipCode(form.getZipCode());
+		employee.setAddress(form.getAddress());
+		employee.setTelephone(form.getTelephone());
+		employee.setSalary(form.getSalary());
+		employee.setCharacteristics(form.getCharacteristics());		
+		employee.setName(form.getName());
+		
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
